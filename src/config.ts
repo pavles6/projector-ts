@@ -1,4 +1,3 @@
-import envPaths from "env-paths";
 import path from "path";
 import { Opts } from "./opts";
 
@@ -24,9 +23,18 @@ function getConfig(opts: Opts): string {
     return opts.config;
   }
 
-  const paths = envPaths("projector");
+  const home = process.env["HOME"];
+  const location = process.env["XDG_CONFIG_HOME"] || home;
 
-  return path.join(paths.config, "projector.json");
+  if (!location) {
+    throw new Error("Unable to find config location");
+  }
+
+  if (location === home) {
+    return path.join(location, ".projector.json");
+  }
+
+  return path.join(location, "projector", "projector.json");
 }
 
 function getOperation(opts: Opts): Operation {
