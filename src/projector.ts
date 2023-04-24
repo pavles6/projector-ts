@@ -1,5 +1,5 @@
-import { existsSync } from "fs";
-import { readFile } from "fs/promises";
+import { existsSync, mkdirSync } from "fs";
+import { readFile, writeFile } from "fs/promises";
 import path from "path";
 import { Config } from "./config";
 
@@ -84,6 +84,15 @@ export default class Projector {
     }
 
     delete dir[key];
+  }
+
+  async save() {
+    const configPath = path.dirname(this.config.config);
+    if (!existsSync(configPath)) {
+      mkdirSync(configPath, { recursive: true });
+    }
+
+    await writeFile(this.config.config, JSON.stringify(this.data));
   }
 
   static async fromConfig(config: Config): Promise<Projector> {
