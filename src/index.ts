@@ -1,3 +1,4 @@
+#!/usr/local/bin/node
 import getConfig from "./config";
 import getOpts from "./opts";
 import Projector from "./projector";
