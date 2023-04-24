@@ -18,7 +18,7 @@ function getPwd(opts: Opts): string {
   return process.cwd();
 }
 
-function getConfig(opts: Opts): string {
+function getConfigPath(opts: Opts): string {
   if (opts.config) {
     return opts.config;
   }
@@ -83,11 +83,11 @@ function getArgs(opts: Opts): string[] {
   return opts.args.slice(1);
 }
 
-export default function config(opts: Opts): Config {
+export default function getConfig(opts: Opts): Config {
   return {
     args: getArgs(opts),
     operation: getOperation(opts),
-    config: getConfig(opts),
+    config: getConfigPath(opts),
     pwd: getPwd(opts),
   };
 }
